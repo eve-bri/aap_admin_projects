@@ -1,2 +1,2 @@
 # aap_admin_projects
-Made application to manage projects. React Native and Firebase
+Made application to manage projects. React Native (TypeScript) and Firebase

@@ -41,6 +41,7 @@ const SelectCompany =  () => {
         await setItem('company', JSON.stringify(company));
         navegation.push('Login')
     }
+ 
     return(
         <View style={styles.saveArea}>
             <Spinner

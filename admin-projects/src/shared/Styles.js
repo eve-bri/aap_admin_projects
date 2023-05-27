@@ -10,3 +10,11 @@ export const createStyleSaveArea = (insets) =>{
         }
     });
 }
+
+export const stylesSpinner = () => {
+    return StyleSheet.create({
+            spinnerTextStyle: {
+            color: '#FFF'
+            },
+        });
+}

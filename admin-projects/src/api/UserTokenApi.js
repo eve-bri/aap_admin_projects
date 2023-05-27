@@ -1,5 +1,5 @@
 //import  AsyncStorage  from '@react-native-async-storage/async-storage';
-import { collection, query, where, getDocs, deleteDoc, doc, addDoc, getDoc } from "firebase/firestore";
+import { collection, query, where, getDocs, deleteDoc, doc, addDoc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import {db} from  '../database/firebase.js';
 const tableName = 'UserToken'
 const refCollection = collection(db, tableName);
@@ -9,17 +9,6 @@ export const getUsertToken = async (ipAddress) => {
 
     const querySnapshot = await getDocs(q);
     token = extractToken(querySnapshot)
-    /*
-    console.log(db)
-    var token = null;
-    await db.collection(colletion).where("IpAddress", "==", ipAddress)
-    .get()
-    .then((querySnapshot) => {
-        token = extractToken(querySnapshot)
-    })
-    .catch((error) => {
-      console.log("Error getting documents: ", error);
-    });*/
     return token;
 }
 
@@ -46,6 +35,20 @@ export const saveUserToken = async (userToken) => {
   } catch (error) {
     console.log(error) 
     return null;
+  }
+}
+
+export const updateActiveToken = async (userToken) => {
+  try {
+    const tokenRef = doc(db, tableName, userToken.Id);
+    updateDoc(tokenRef, { 
+      'Active' : userToken.Active,
+      'CompanyId': userToken.CompanyId,
+      'UserId': userToken.UserId });
+    return true;
+  } catch (error) {
+    console.log('Error ocurred: \n' + error)
+    return false;
   }
 }
 

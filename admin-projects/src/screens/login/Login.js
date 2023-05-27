@@ -12,7 +12,7 @@ import { TitileScreen } from "../../components/TitleScreen";
 import { NoLogo } from "../../shared/Links";
 
 import { getItem,setItem } from "../../shared/LocalStorage";
-import {deleteUserToken, saveUserToken} from "../../api/UserTokenApi"
+import {deleteUserToken, saveUserToken, updateActiveToken} from "../../api/UserTokenApi"
 import { verifyLoginUser } from "../../api/UserApi";
 import { getIpAddress } from "../../shared/General";
 
@@ -43,19 +43,46 @@ const Login = () => {
     const login = async(values) => {
         setShowSpinner(true);
         var user = await verifyLoginUser(values.UserName, values.Password, company.Id);
-        await setItem('user',JSON.stringify(user));
-        const ipAddress = await getIpAddress();
-        const data ={
-            CompanyId: company.Id,
-            IpAddress: ipAddress,
-            UserId: user.Id
-        }
-        const userToken = await saveUserToken(data);
-        setShowSpinner(false);
-        if(userToken !== null){
-            await setItem('userToken', JSON.stringify(userToken));
-            navegation.push('ProjectsList');
+        if(user !== null){
+            await setItem('user',JSON.stringify(user));
+            var userToken = JSON.parse(await getItem('userToken'));
+            if(userToken !== null){
+                userToken.UserId = user.Id;
+                userToken.CompanyId = company.Id;
+                userToken.Active = true;
+                const login = await updateActiveToken(userToken)
+                if(login){
+                    await setItem('userToken',JSON.stringify(userToken));
+                    setShowSpinner(false);
+                    return navegation.push('ProjectsList');
+                }else{
+                    setShowSpinner(false);
+                    return Alert.alert('Error', 'Intente nuevamente', [
+                        {text: 'OK', onPress: () => {}},
+                      ]
+                    );
+                }
+            }
+            const ipAddress = await getIpAddress();
+            const data ={
+                CompanyId: company.Id,
+                IpAddress: ipAddress,
+                UserId: user.Id
+            }
+            userToken = await saveUserToken(data);
+            if(userToken !== null){
+                await setItem('userToken', JSON.stringify(userToken));
+                setShowSpinner(false);
+                return navegation.push('ProjectsList');
+            }else{
+                setShowSpinner(false);
+                return Alert.alert('Error', 'Intente nuevamente', [
+                        {text: 'OK', onPress: () => {}},
+                    ]
+                );
+            }
         }else{
+            setShowSpinner(false);
             Alert.alert('Error', 'Datos incorrectos', [
                     {text: 'OK', onPress: () => {}},
                   ]

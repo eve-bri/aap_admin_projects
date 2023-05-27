@@ -1,11 +1,12 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { useNavigation } from '@react-navigation/native';
+import { Text, View, NativeBaseProvider } from 'native-base'
 
 const Help = () => {
     return(
-        <View>
-            <Text>Lista de ayuda</Text>
-        </View>
+        <NativeBaseProvider>
+            <Text> Hola </Text>
+        </NativeBaseProvider>
     );
 }
 

@@ -1,11 +1,8 @@
 import React from "react";
-import { } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import { Text, View, NativeBaseProvider } from 'native-base'
 
-const ProjectsList = () => {
-    const navegation = useNavigation()
-
+const BugReport = () => {
     return(
         <NativeBaseProvider>
             <Text> Hola </Text>
@@ -13,4 +10,4 @@ const ProjectsList = () => {
     );
 }
 
-export default ProjectsList;
+export default BugReport;

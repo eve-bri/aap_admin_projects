@@ -41,18 +41,6 @@ const SelectCompany =  () => {
         await setItem('company', JSON.stringify(company));
         navegation.push('Login')
     }
-    /*
-        <Card key={company.Id}>
-                                {
-                                    <View style={stylesCard.view} > 
-                                        <Text style={stylesCard.text}>{company.Name}</Text>
-                                        <Image style={stylesCard.image}
-                                            source={{uri:company.LogoUrl}}
-                                        />
-                                    </View>
-                                }
-                            </Card>
-    */
     return(
         <View style={styles.saveArea}>
             <Spinner

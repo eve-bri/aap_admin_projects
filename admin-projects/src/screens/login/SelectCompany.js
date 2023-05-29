@@ -7,7 +7,7 @@ import { setItem } from "../../shared/LocalStorage";
 import  {createStyleSaveArea} from '../../shared/Styles'
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import {getUsertToken} from "../../api/UserTokenApi"
-import {getCompanies} from "../../api/CompanyApi"
+import {getCompanies, getCompany} from "../../api/CompanyApi"
 import { TitileScreen } from "../../components/TitleScreen";
 
 const SelectCompany =  () => {
@@ -17,22 +17,26 @@ const SelectCompany =  () => {
     const [showSpinner, setShowSpinner] = useState(true);
     const navegation = useNavigation()
 
-    const verifySession = useCallback(async()=> {
+    const verifySession = async()=> {
         const ipAdress = await getIpAddress();
         var token = await getUsertToken(ipAdress);
         if(token != null){
-            await setItem('userToken', JSON.stringify(token)) 
+            await setItem('userToken', JSON.stringify(token));
+            await setItem('company', JSON.stringify(await getCompany(token.CompanyId)));
             if(token.Active){
-                navegation.navigate('ProjectsList')
+                setShowSpinner(false);
+                navegation.navigate('ProjectsList');
             }else{
-                navegation.push('Login')
+                setShowSpinner(false);
+                navegation.push('Login');
             }
         }else{
             const companiesR = await getCompanies()
             setCompanies(companiesR);
             setShowSpinner(false);
         }
-    }, [])
+    }
+
     useEffect(() =>{
         verifySession();
     },[]);

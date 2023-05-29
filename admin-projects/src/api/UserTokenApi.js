@@ -3,6 +3,7 @@ import { collection, query, where, getDocs, deleteDoc, doc, addDoc, getDoc, setD
 import {db} from  '../database/firebase.js';
 const tableName = 'UserToken'
 const refCollection = collection(db, tableName);
+
 export const getUsertToken = async (ipAddress) => {
 
     const q = query(refCollection, where("IpAddress", "==", ipAddress));

@@ -1,7 +1,7 @@
 import React, {useEffect,useCallback, useState} from "react";
 import { useNavigation } from '@react-navigation/native';
 import { Input, Icon, Text, View, Button, NativeBaseProvider } from 'native-base'
-import { StyleSheet, TextInput, Image, TouchableOpacity, Alert } from "react-native";
+import { StyleSheet, Image, TouchableOpacity, Alert } from "react-native";
 import { MaterialIcons, AntDesign } from "@expo/vector-icons"
 import Spinner from 'react-native-loading-spinner-overlay';
 import { Formik } from 'formik';
@@ -10,23 +10,21 @@ import  {createStyleSaveArea} from '../../shared/Styles'
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { TitileScreen } from "../../components/TitleScreen";
 import { NoLogo } from "../../shared/Links";
-
 import { getItem,setItem } from "../../shared/LocalStorage";
-import {deleteUserToken, saveUserToken, updateActiveToken} from "../../api/UserTokenApi"
+import {deleteUserToken, saveUserToken, updateActiveToken, getUsertToken} from "../../api/UserTokenApi"
 import { verifyLoginUser } from "../../api/UserApi";
 import { getIpAddress } from "../../shared/General";
 
 const Login = () => {
-    const navegation = useNavigation()
+    const navegation = useNavigation();
     const insets = useSafeAreaInsets();
-    const styles = createStyleSaveArea(insets)
+    const styles = createStyleSaveArea(insets);
     const [company, setCompany] = useState();
     const [inputPassword, setInputPassword]  = useState('password');
     const [showSpinner, setShowSpinner] = useState(false);
-    const getStorageInfo = useCallback(async()=> {
-        const result = JSON.parse(await getItem('company'));
-        setCompany(result);
-    }, [])
+    const getStorageInfo = async()=> {
+        setCompany(JSON.parse(await getItem('company')));
+    }
     useEffect(() =>{
         getStorageInfo();
     },[]);

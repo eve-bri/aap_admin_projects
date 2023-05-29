@@ -10,6 +10,7 @@ import Profile from '../screens/home/profile/Profile';
 import Help from '../screens/home/help/Help';
 import CustomHeader from '../components/CustomHeader';
 import BugReport from '../screens/home/bug_report/BugReport';
+import ProjectDetails from '../screens/home/projects/ProjectDetails';
 
 const Stack = createNativeStackNavigator();
 
@@ -28,6 +29,7 @@ export const Navigator = () => {
                     <Stack.Screen name="Profile" component={Profile}/>
                     <Stack.Screen name="Help" component={Help}/>
                     <Stack.Screen name="BugReport" component={BugReport}/>
+                    <Stack.Screen name="ProjectDetails" component={ProjectDetails}/>
                 </Stack.Navigator>
             </NavigationContainer>
        </PaperProvider>

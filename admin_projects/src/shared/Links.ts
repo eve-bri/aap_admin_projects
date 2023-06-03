@@ -1,0 +1,2 @@
+export const NoLogo:string = 'https://res.cloudinary.com/dsalvw7ja/image/upload/v1684639845/no-image-icon_zsnak4.png';
+export const NoPhoto:string = 'https://res.cloudinary.com/dsalvw7ja/image/upload/v1684717465/no-photo-icon_gxtcdz.png';

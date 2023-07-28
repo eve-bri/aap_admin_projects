@@ -6,6 +6,8 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import Spinner from 'react-native-loading-spinner-overlay';
 import { Formik } from 'formik';
 import * as yup from 'yup';
+import { printToFileAsync } from 'expo-print';
+import { shareAsync } from 'expo-sharing';
 import { stylesSpinner } from "../../../shared/Styles";
 import { getItem } from "../../../shared/LocalStorage";
 import { getProjects, saveProject} from "../../../api/ProjectsApi";
@@ -13,6 +15,12 @@ import { ProjectsListView } from "./components/PorjectsListView";
 import { IProject } from "../../../model/Project";
 import { ICompany } from "../../../model/Company";
 import { IUser } from "../../../model/User";
+
+const data = {
+    name: 'Divyesh Barad',
+    email: 'divyesh@gmail.com',
+    address: 'Rajkot',
+}
 
 const ProjectsList = () => {
     const [textSpinner, setTextSpinner] = useState('Cargando proyectos...');
@@ -108,6 +116,25 @@ const ProjectsList = () => {
               ]
             );
         }
+    }
+
+    const html = `
+        <html>
+            <body>
+                <h2>Hi ${data.name}</h2>
+                <h4>Email: ${data.email}</h4>
+                <h4>Address: ${data.address}</h4>
+            </body>
+        </html>
+    `;
+
+    const generatePdf = async () => {
+        const file = await printToFileAsync({
+            html: html,
+            base64: false,
+            
+        });
+        await shareAsync(file.uri);
     }
 
     return(

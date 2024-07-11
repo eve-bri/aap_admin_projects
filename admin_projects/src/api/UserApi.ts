@@ -1,12 +1,21 @@
 //import  AsyncStorage  from '@react-native-async-storage/async-storage';
 import { collection, query, where, getDocs, getDoc, doc } from "firebase/firestore";
-import {db} from  '../database/firebase';
+import {db, uploadField} from  '../database/firebase';
 import { IUser } from "../model/User";
 
 const tableName = 'User'
 const refCollection = collection(db, tableName);
 
-export const verifyLoginUser = async (userName:string, password:string, companyId:string)=> {
+export const verifyUserNameAvailability = async (userName:string) => {
+    const q = query(refCollection, where("Login", "==", userName));
+    const querySnapshot = await getDocs(q);
+    if(querySnapshot.empty){
+        return true;
+    }
+    return false;
+}
+
+export const verifyLoginUser = async (userName:string, password:string)=> {
     const q = query(refCollection, where("Login", "==", userName));
     const querySnapshot = await getDocs(q);
     var user:IUser|null = null;
@@ -15,11 +24,16 @@ export const verifyLoginUser = async (userName:string, password:string, companyI
         user = users[0]
     }
     if(user !== null){
-        if(user.CompanyId !== companyId || user.Password !== password){
+        if(user.Password !== password){
             user = null;
         }
     }
     return user;
+}
+
+export const registerUser = async (userData:any) => {
+    var result = await uploadField(userData.file.base64, 'images', userData.file.name, {contentType: 'image/'+userData.file.extension,});
+    return result;
 }
 
 export const getUser = async (Id:string) => {

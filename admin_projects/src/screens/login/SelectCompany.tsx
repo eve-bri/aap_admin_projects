@@ -24,6 +24,7 @@ const SelectCompany =  () => {
         const ipAdress = await getIpAddress();
         var token:IUserToken|null = await getUsertToken(ipAdress);
         if(token != null){
+            console.log('sesion is null');
             await setItem('userToken', JSON.stringify(token));
             await setItem('company', JSON.stringify(await getCompany(token.CompanyId)));
             if(token.Active){

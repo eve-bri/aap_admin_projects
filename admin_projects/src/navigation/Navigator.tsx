@@ -11,6 +11,7 @@ import Help from '../screens/home/help/Help';
 import CustomHeader from '../components/CustomHeader';
 import BugReport from '../screens/home/bug_report/BugReport';
 import ProjectDetails from '../screens/home/projects/ProjectDetails';
+import Register from '../screens/login/Register';
 
 const Stack = createNativeStackNavigator();
 
@@ -23,8 +24,8 @@ export const Navigator = () => {
                             header: ({ navigation, route, options }: NativeStackHeaderProps) => <CustomHeader navigation={navigation} route={route} options={options}/>,
                         }}
                     >
-                        <Stack.Screen name='SelectCompany' component={SelectCompany}/>
                         <Stack.Screen name='Login' component={Login}/>
+                        <Stack.Screen name='Register' component={Register}/>
                         <Stack.Screen name="ProjectsList" component={ProjectsList}/>
                         <Stack.Screen name="Profile" component={Profile}/>
                         <Stack.Screen name="Help" component={Help}/>

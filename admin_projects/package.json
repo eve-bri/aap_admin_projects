@@ -14,8 +14,10 @@
     "@react-native-community/datetimepicker": "6.7.3",
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/native-stack": "^6.9.12",
+    "base-64": "^1.0.0",
     "expo": "~48.0.18",
     "expo-constants": "^14.2.1",
+    "expo-image-picker": "~14.1.1",
     "expo-modules-core": "^1.2.7",
     "expo-print": "^12.2.1",
     "expo-sharing": "^11.2.2",
@@ -38,6 +40,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
+    "@types/base-64": "^1.0.2",
     "@types/react": "~18.0.14",
     "typescript": "^4.9.4"
   },

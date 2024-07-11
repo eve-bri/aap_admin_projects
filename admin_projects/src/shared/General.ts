@@ -11,3 +11,8 @@ export const getIpAddress = async () =>{
               });
   return ipAdress;
 }
+
+export const getExtensionFile = (file:string) => {
+  var arrayName = file.split('.');
+  return arrayName[arrayName.length -1]
+}
